@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "798232547175",
+    "project_id": "racetracker-e0e90",
+    "storage_bucket": "racetracker-e0e90.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798232547175:android:7e4f512fda71ec3c9f29c2",
+        "android_client_info": {
+          "package_name": "com.example.racetrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj8mrgmK5XaQLNOXNSBn7b7nIKXbEcdOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
