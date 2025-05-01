@@ -15,9 +15,9 @@ class CreateRaceDialog extends StatefulWidget {
     this.segments = const ['swim', 'bike', 'run'],
     this.initialDistances = const {'swim': 1.0, 'bike': 1.0, 'run': 1.0},
     this.segmentLabels = const {
-      'swim': 'Swimming',
-      'bike': 'Cycling',
-      'run': 'Running',
+      'swims': 'Swimming',
+      'bikes': 'Cycling',
+      'runs': 'Running',
     },
     this.segmentIcons = const {
       'swim': Icons.pool,
