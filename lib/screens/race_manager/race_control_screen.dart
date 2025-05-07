@@ -121,8 +121,7 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
                     ElevatedButton(
                       onPressed: () => _showResetConfirmation(context, raceProvider),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        
+                        backgroundColor: Colors.blue,
                         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                       ),
                       child: const Text(

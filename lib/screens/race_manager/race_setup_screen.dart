@@ -58,7 +58,7 @@ class _RaceSetupScreenState extends State<RaceSetupScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error loading races: $e'),
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.blue,
           ),
         );
       }
