@@ -36,7 +36,7 @@ class _CreateRaceDialogState extends State<CreateRaceDialog> {
               'swim', 
               'Swimming', 
               Icons.pool, 
-              Colors.blue.shade600
+              Colors.blue.shade500
             ),
             
             _buildSegmentCard(
@@ -50,7 +50,7 @@ class _CreateRaceDialogState extends State<CreateRaceDialog> {
               'run', 
               'Running', 
               Icons.directions_run, 
-              Colors.orange.shade600
+              Colors.orange.shade700
             ),
           ],
         ),

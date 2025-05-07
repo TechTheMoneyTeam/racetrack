@@ -28,7 +28,7 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
   @override
   Widget build(BuildContext context) {
            return Scaffold(
-          backgroundColor: Colors.grey[100],
+          backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: const Color(0xFF0C3B5B),
         title: const Text(
@@ -102,7 +102,7 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
                         ),
                         child: const Text(
                         'START RACE',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                         ),
                     ),
                   if (race.status == RaceStatus.started)
@@ -114,7 +114,7 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
                       ),
                       child: const Text(
                         'FINISH RACE',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                       ),
                     ),
                   if (race.status != RaceStatus.notStarted)
@@ -126,7 +126,7 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
                       ),
                       child: const Text(
                         'RESET RACE',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                       ),
                     ),
                 ],
