@@ -57,83 +57,94 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
             return const Center(child: Text('Race not found'));
           }
 
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Race Status: ${_getStatusText(race.status)}',
-                style: Theme.of(context).textTheme.headlineSmall,
+         return Padding(
+  padding: const EdgeInsets.only(top: 30),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+     Row(
+  mainAxisSize: MainAxisSize.min,
+  children: [
+    const Icon(Icons.flag), // You can change the icon as needed
+    const SizedBox(width: 8), // Space between icon and text
+    Text(
+      'Race Status: ${_getStatusText(race.status)}',
+      style: Theme.of(context).textTheme.headlineSmall,
+    ),
+  ],
+),
+
+      const SizedBox(height: 16),
+      if (race.startTime != null) ...[
+        Text(
+          'Start Time: ${_formatDateTime(race.startTime!)}',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 8),
+      ],
+      if (race.status == RaceStatus.started) ...[
+        StreamBuilder(
+          stream: Stream.periodic(const Duration(seconds: 1)),
+          builder: (context, snapshot) {
+            final now = DateTime.now();
+            final duration = now.difference(race.startTime!);
+            final hours = duration.inHours.toString().padLeft(2, '0');
+            final minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
+            final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+            return Text(
+              'Elapsed Time: $hours:$minutes:$seconds',
+              style: Theme.of(context).textTheme.titleLarge,
+            );
+          },
+        ),
+        const SizedBox(height: 16),
+      ],
+      const SizedBox(height: 32),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          if (race.status == RaceStatus.notStarted)
+            ElevatedButton(
+              onPressed: () => raceProvider.startRace(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF0C3B5B),
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               ),
-              const SizedBox(height: 16),
-              if (race.startTime != null) ...[
-                Text(
-                  'Start Time: ${_formatDateTime(race.startTime!)}',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8),
-              ],
-              if (race.status == RaceStatus.started) ...[
-                StreamBuilder(
-                  stream: Stream.periodic(const Duration(seconds: 1)),
-                  builder: (context, snapshot) {
-                    final now = DateTime.now();
-                    final duration = now.difference(race.startTime!);
-                    final hours = duration.inHours.toString().padLeft(2, '0');
-                    final minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
-                    final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-                    return Text(
-                      'Elapsed Time: $hours:$minutes:$seconds',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    );
-                  },
-                ),
-                const SizedBox(height: 16),
-              ],
-              const SizedBox(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  if (race.status == RaceStatus.notStarted)
-                    ElevatedButton(
-                      onPressed: () => raceProvider.startRace(),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0C3B5B),
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                        ),
-                        child: const Text(
-                        'START RACE',
-                        style: TextStyle(color: Colors.white),
-                        ),
-                    ),
-                  if (race.status == RaceStatus.started)
-                    ElevatedButton(
-                      onPressed: () => raceProvider.finishRace(),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                      ),
-                      child: const Text(
-                        'FINISH RACE',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  if (race.status != RaceStatus.notStarted)
-                    ElevatedButton(
-                      onPressed: () => _showResetConfirmation(context, raceProvider),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                      ),
-                      child: const Text(
-                        'RESET RACE',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                ],
+              child: const Text(
+                'START RACE',
+                style: TextStyle(color: Colors.white),
               ),
-            ],
-          );
+            ),
+          if (race.status == RaceStatus.started)
+            ElevatedButton(
+              onPressed: () => raceProvider.finishRace(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              ),
+              child: const Text(
+                'FINISH RACE',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          if (race.status != RaceStatus.notStarted)
+            ElevatedButton(
+              onPressed: () => _showResetConfirmation(context, raceProvider),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              ),
+              child: const Text(
+                'RESET RACE',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+        ],
+      ),
+    ],
+  ),
+);
+
         },
       ),
     );
