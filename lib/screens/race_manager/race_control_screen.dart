@@ -66,7 +66,7 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
   mainAxisSize: MainAxisSize.min,
   children: [
     const Icon(Icons.flag), // You can change the icon as needed
-    const SizedBox(width: 8), // Space between icon and text
+    const SizedBox(width: 8), // Space between icon and texts
     Text(
       'Race Status: ${_getStatusText(race.status)}',
       style: Theme.of(context).textTheme.headlineSmall,
@@ -156,7 +156,7 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Reset Race'),
         content: const Text(
-          'Are you sure you want to reset the race? This will clear all times and set the race status to "Not Started".',
+          'Are you sure you want to reset this race? This will clear all times and set the race status to "Not Started".',
         ),
         actions: [
           TextButton(
