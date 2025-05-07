@@ -2,55 +2,75 @@ import 'package:flutter/material.dart';
 import 'widgets/segment_card.dart';
 
 class CreateRaceDialog extends StatefulWidget {
-  const CreateRaceDialog({super.key});
+  final String raceType;
+  final List<String> segments;
+  final Map<String, double> initialDistances;
+  final Map<String, String> segmentLabels;
+  final Map<String, IconData> segmentIcons;
+  final Map<String, Color> segmentColors;
+
+  const CreateRaceDialog({
+    super.key,
+    this.raceType = 'Triathlon',
+    this.segments = const ['swim', 'bike', 'run'],
+    this.initialDistances = const {'swim': 1.0, 'bike': 1.0, 'run': 1.0},
+    this.segmentLabels = const {
+      'swim': 'Swimming',
+      'bike': 'Cycling',
+      'run': 'Running',
+    },
+    this.segmentIcons = const {
+      'swim': Icons.pool,
+      'bike': Icons.directions_bike,
+      'run': Icons.directions_run,
+    },
+    this.segmentColors = const {
+      'swim': Colors.blue,
+      'bike': Colors.green,
+      'run': Colors.orange,
+    },
+  });
 
   @override
-  _CreateRaceDialogState createState() => _CreateRaceDialogState();
+  State<CreateRaceDialog> createState() => _CreateRaceDialogState();
 }
 
 class _CreateRaceDialogState extends State<CreateRaceDialog> {
-  final String selectedRaceType = 'Triathlon';
-  final List<String> segments = ['swim', 'bike', 'run'];
-  final Map<String, double> distances = {
-    'swim': 1.0,
-    'bike': 1.0,
-    'run': 1.0,
-  };
-  
+  late Map<String, double> distances;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize with default or provided distances
+    distances = Map.from(widget.initialDistances);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Create New Triathlon'),
+      title: Text('Create New ${widget.raceType}'),
       content: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Race Type: Triathlon', 
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            Text(
+              'Race Type: ${widget.raceType}',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
             const SizedBox(height: 20),
-            const Text('Distance (km):', style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text(
+              'Distance (km):',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 8),
-            
-            _buildSegmentCard(
-              'swim', 
-              'Swimming', 
-              Icons.pool, 
-              Colors.blue.shade400
-            ),
-            
-            _buildSegmentCard(
-              'bike', 
-              'Cycling', 
-              Icons.directions_bike, 
-              Colors.green.shade500
-            ),
-            
-            _buildSegmentCard(
-              'run', 
-              'Running', 
-              Icons.directions_run, 
-              Colors.orange.shade400
+            ...widget.segments.map(
+              (segment) => _buildSegmentCard(
+                segment,
+                widget.segmentLabels[segment] ?? segment,
+                widget.segmentIcons[segment] ?? Icons.flag,
+                widget.segmentColors[segment] ?? Colors.grey,
+              ),
             ),
           ],
         ),
@@ -62,15 +82,10 @@ class _CreateRaceDialogState extends State<CreateRaceDialog> {
         ),
         ElevatedButton(
           onPressed: () {
-            final validatedDistances = <String, double>{};
-            for (var segment in segments) {
-              validatedDistances[segment] = distances[segment] ?? 1.0;
-            }
-            
             Navigator.of(context).pop({
-              'raceType': selectedRaceType,
-              'segments': segments,
-              'distances': validatedDistances,
+              'raceType': widget.raceType,
+              'segments': widget.segments,
+              'distances': distances,
             });
           },
           style: ElevatedButton.styleFrom(
@@ -82,8 +97,13 @@ class _CreateRaceDialogState extends State<CreateRaceDialog> {
       ],
     );
   }
-  
-  Widget _buildSegmentCard(String segment, String label, IconData icon, Color color) {
+
+  Widget _buildSegmentCard(
+    String segment,
+    String label,
+    IconData icon,
+    Color color,
+  ) {
     return SegmentCard(
       segmentId: segment,
       segmentName: label,
