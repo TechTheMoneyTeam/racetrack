@@ -30,7 +30,7 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
     print("📱 AddParticipantScreen initialized with raceId: ${widget.raceId}");
 
     if (widget.raceId == null) {
-      print("⚠️ Warning: AddParticipantScreen initialized without raceId");
+      print("Error : AddParticipantScreen initialized without raceId");
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final participantProvider = Provider.of<ParticipantProvider>(
@@ -40,7 +40,7 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
         final currentRaceId = participantProvider.currentRaceId;
 
         if (currentRaceId == null) {
-          print("❌ No race ID available in provider either");
+          print("Error !!!  No race ID available in provider either");
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text(
