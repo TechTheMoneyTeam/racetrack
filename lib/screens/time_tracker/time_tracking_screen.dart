@@ -135,7 +135,7 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(15.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -159,7 +159,7 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
                               labelText: 'BIB Number',
                               labelStyle: const TextStyle(color: Color(0xFF0C3B5B)),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(5),
                                 borderSide: const BorderSide(color: Color(0xFF0C3B5B)),
                               ),
                               focusedBorder: const OutlineInputBorder(
@@ -179,7 +179,7 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(5),
                             ),
                             textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                             elevation: 2,
