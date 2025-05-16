@@ -161,17 +161,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the current race ID from the RaceProvider
+   
     final raceProvider = Provider.of<RaceProvider>(context);
     final String? currentRaceId = raceProvider.currentRaceId;
     
-    // Build the appropriate screen based on the selected index
+   
     Widget currentScreen;
     switch (_selectedIndex) {
       case 0:
         currentScreen = RaceSetupScreen(
           onRaceCreated: (raceId) {
-            // Update the provider instead of local state
+      
             raceProvider.setCurrentRaceId(raceId);
           },
         );
@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// A reusable widget for screens that require a race to be created first
+
 class NoRaceScreen extends StatelessWidget {
   final String message;
   
@@ -259,7 +259,7 @@ class NoRaceScreen extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-                // Navigate to dashboard tab
+           
                 (context.findAncestorStateOfType<_HomeScreenState>())?._onItemTapped(0);
               },
               child: const Text('Go to Dashboard'),

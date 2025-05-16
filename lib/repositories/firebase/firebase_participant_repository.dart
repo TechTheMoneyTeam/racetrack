@@ -96,7 +96,6 @@ class FirebaseParticipantRepository implements ParticipantRepository {
     try {
       print('[FirebaseParticipantRepository] Deleting participant: $bibNumber');
       
-      // Delete the participant
       await _firestore.collection(collectionName).doc(bibNumber).delete();
       final segmentTimesQuery = await _firestore
           .collection('segmentTimes')

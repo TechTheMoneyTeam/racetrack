@@ -50,7 +50,7 @@ class FirebaseSegmentTimeRepository implements SegmentTimeRepository {
 
   @override
   Future<void> deleteSegmentTime(String bibNumber, String segment, String raceId) async {
-    final docId = '${raceId}_${bibNumber}_${segment}';
+    final docId = '${raceId}_${bibNumber}_$segment';
     print('[FirebaseSegmentTimeRepository] Deleting segmentTime: docId=$docId');
     try {
       await _firestore.collection('segmentTimes').doc(docId).delete();

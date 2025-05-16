@@ -58,7 +58,7 @@ class RaceProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> createRace(List<String> segments) async {
+  Future<void> createRace(List<String> segments, {Map<String, double>? distances, String? raceType}) async {
     try {
       _isLoading = true;
       _error = null;
@@ -68,6 +68,8 @@ class RaceProvider extends ChangeNotifier {
         id: '',
         segments: segments,
         status: RaceStatus.notStarted,
+        distances: distances,
+        raceType: raceType,
       );
 
       final raceId = await _raceRepository.createRace(race);

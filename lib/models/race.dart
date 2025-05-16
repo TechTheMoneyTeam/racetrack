@@ -7,7 +7,9 @@ class Race {
   DateTime? endTime;
   final List<String> segments; 
   final Map<String, double>? distances; 
-  final String? raceType;   Race({
+  final String? raceType;
+  
+  Race({
     required this.id,
     this.status = RaceStatus.notStarted,
     this.startTime,

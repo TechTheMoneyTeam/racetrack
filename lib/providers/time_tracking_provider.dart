@@ -90,7 +90,6 @@ class TimeTrackingProvider extends ChangeNotifier {
       return;
     }
 
-    // Sequential segment enforcement using provided segments
     final currentSegmentIndex = segments.indexOf(_currentSegment!);
     if (currentSegmentIndex > 0) {
       final previousSegment = segments[currentSegmentIndex - 1];
@@ -118,7 +117,7 @@ class TimeTrackingProvider extends ChangeNotifier {
       notifyListeners();
 
       print(
-        '[TimeTrackingProvider] Recording time for participant $bibNumber in segment ${_currentSegment}',
+        '[TimeTrackingProvider] Recording time for participant $bibNumber in segment $_currentSegment',
       );
       final segmentTime = SegmentTime(
         bibNumber: bibNumber,
@@ -152,7 +151,7 @@ class TimeTrackingProvider extends ChangeNotifier {
       notifyListeners();
 
       print(
-        '[TimeTrackingProvider] Deleting time for participant $bibNumber in segment ${_currentSegment}',
+        '[TimeTrackingProvider] Deleting time for participant $bibNumber in segment $_currentSegment',
       );
       await _segmentTimeRepository.deleteSegmentTime(
         bibNumber,
