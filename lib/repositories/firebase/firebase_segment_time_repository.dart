@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/segment_time.dart';
 import '../abstract/segment_time_repository.dart';
+import '../../dtos/segment_time_dto.dart';
 
 class FirebaseSegmentTimeRepository implements SegmentTimeRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -8,12 +9,12 @@ class FirebaseSegmentTimeRepository implements SegmentTimeRepository {
   @override
   Future<void> recordTime(SegmentTime segmentTime) async {
     final docId = '${segmentTime.raceId}_${segmentTime.bibNumber}_${segmentTime.segment}';
-    print('[FirebaseSegmentTimeRepository] Writing to Firestore: docId=$docId, data=${segmentTime.toJson()}');
+    print('[FirebaseSegmentTimeRepository] Writing to Firestore: docId=$docId');
     try {
       await _firestore
           .collection('segmentTimes')
           .doc(docId)
-          .set(segmentTime.toJson());
+          .set(SegmentTimeDTO.toJson(segmentTime));
       print('[FirebaseSegmentTimeRepository] Successfully wrote segmentTime for bibNumber=${segmentTime.bibNumber}');
     } catch (e, stack) {
       print('[FirebaseSegmentTimeRepository] Error recording segment time: $e');
@@ -35,7 +36,7 @@ class FirebaseSegmentTimeRepository implements SegmentTimeRepository {
           return snapshot.docs
               .map((doc) {
                 try {
-                  return SegmentTime.fromJson(doc.data());
+                  return SegmentTimeDTO.fromJson(doc.data());
                 } catch (e, stack) {
                   print('[FirebaseSegmentTimeRepository] Error parsing segment time data: $e');
                   print('Document data: ${doc.data()}');
@@ -75,7 +76,7 @@ class FirebaseSegmentTimeRepository implements SegmentTimeRepository {
           return snapshot.docs
               .map((doc) {
                 try {
-                  return SegmentTime.fromJson(doc.data());
+                  return SegmentTimeDTO.fromJson(doc.data());
                 } catch (e, stack) {
                   print('[FirebaseSegmentTimeRepository] Error parsing segment time data: $e');
                   print('Document data: ${doc.data()}');

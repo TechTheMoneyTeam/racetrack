@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/race.dart';
 import '../abstract/race_repository.dart';
+import '../../dtos/race_dto.dart';
 
 class FirebaseRaceRepository implements RaceRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -8,7 +9,7 @@ class FirebaseRaceRepository implements RaceRepository {
   @override
   Future<String> createRace(Race race) async {
     try {
-      print('[FirebaseRaceRepository] Creating race: ${race.toJson()}');
+      print('[FirebaseRaceRepository] Creating race');
       final docRef = _firestore.collection('races').doc();
       final raceWithId = Race(
         id: docRef.id,
@@ -16,8 +17,10 @@ class FirebaseRaceRepository implements RaceRepository {
         startTime: race.startTime,
         endTime: race.endTime,
         segments: race.segments,
+        distances: race.distances,
+        raceType: race.raceType,
       );
-      await docRef.set(raceWithId.toJson());
+      await docRef.set(RaceDTO.toJson(raceWithId));
       print('[FirebaseRaceRepository] Successfully created race: ${docRef.id}');
       return docRef.id;
     } catch (e, stack) {
@@ -39,8 +42,8 @@ class FirebaseRaceRepository implements RaceRepository {
             throw Exception('Race $raceId not found');
           }
           try {
-            final race = Race.fromJson(snapshot.data()!);
-            print('[FirebaseRaceRepository] Got race: ${race.toJson()}');
+            final race = RaceDTO.fromJson(snapshot.data()!);
+            print('[FirebaseRaceRepository] Got race: $raceId');
             return race;
           } catch (e, stack) {
             print('[FirebaseRaceRepository] Error parsing race data: $e');
@@ -53,11 +56,11 @@ class FirebaseRaceRepository implements RaceRepository {
 
   Future<void> updateRace(Race race) async {
     try {
-      print('[FirebaseRaceRepository] Updating race: ${race.toJson()}');
+      print('[FirebaseRaceRepository] Updating race: ${race.id}');
       await _firestore
           .collection('races')
           .doc(race.id)
-          .update(race.toJson());
+          .update(RaceDTO.toJson(race));
       print('[FirebaseRaceRepository] Successfully updated race: ${race.id}');
     } catch (e, stack) {
       print('[FirebaseRaceRepository] Error updating race: $e');
@@ -83,7 +86,7 @@ class FirebaseRaceRepository implements RaceRepository {
     try {
       print('[FirebaseRaceRepository] Getting all races');
       final querySnapshot = await _firestore.collection('races').get();
-      final races = querySnapshot.docs.map((doc) => Race.fromJson(doc.data())).toList();
+      final races = querySnapshot.docs.map((doc) => RaceDTO.fromJson(doc.data())).toList();
       print('[FirebaseRaceRepository] Got ${races.length} races');
       return races;
     } catch (e, stack) {
