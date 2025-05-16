@@ -78,7 +78,7 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
         elevation: 2,
         centerTitle: true,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(12)),
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
         ),
       ),
       backgroundColor: Colors.grey[100],
@@ -184,7 +184,7 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
                             textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                             elevation: 2,
                           ),
-                          child: const Text('TRACK TIME'),
+                          child: const Text('Search Participant'),
                         ),
                       ],
                     ),
