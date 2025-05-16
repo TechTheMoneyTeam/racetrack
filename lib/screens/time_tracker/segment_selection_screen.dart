@@ -19,13 +19,13 @@ class SegmentSelectionScreen extends StatelessWidget {
         children: [
           Container(
             color: const Color(0xFF0C3B5B),
-            padding: const EdgeInsets.only(top: 40, bottom: 16),
+            padding: const EdgeInsets.only(top: 35, bottom: 20),
             width: double.infinity,
             child: const Text(
               'Segment Selection',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,

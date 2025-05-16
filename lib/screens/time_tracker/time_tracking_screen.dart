@@ -164,7 +164,7 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(15.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -178,10 +178,44 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 20),
-                    BibNumberInput(
-                      controller: _bibNumberController,
-                      focusNode: _bibNumberFocusNode,
-                      onSubmitted: (_) => _trackTime(race.segments),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _bibNumberController,
+                            focusNode: _bibNumberFocusNode,
+                            decoration: InputDecoration(
+                              labelText: 'BIB Number',
+                              labelStyle: const TextStyle(color: Color(0xFF0C3B5B)),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(color: Color(0xFF0C3B5B)),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Color(0xFF0C3B5B), width: 2),
+                              ),
+                              prefixIcon: const Icon(Icons.numbers, color: Color(0xFF0C3B5B)),
+                            ),
+                            keyboardType: TextInputType.number,
+                            onSubmitted: (_) => _trackTime(race.segments),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        ElevatedButton(
+                          onPressed: () => _trackTime(race.segments),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF0C3B5B),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            elevation: 2,
+                          ),
+                          child: const Text('TRACK TIME'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
