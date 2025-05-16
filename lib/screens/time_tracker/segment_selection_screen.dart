@@ -9,7 +9,7 @@ import 'time_tracking_screen.dart';
 class SegmentSelectionScreen extends StatelessWidget {
   final String raceId;
 
-  const SegmentSelectionScreen({Key? key, required this.raceId}) : super(key: key);
+  const SegmentSelectionScreen({super.key, required this.raceId});
 
   @override
   Widget build(BuildContext context) {

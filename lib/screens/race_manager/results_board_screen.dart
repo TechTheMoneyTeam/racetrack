@@ -336,16 +336,16 @@ class _ResultsBoardScreenState extends State<ResultsBoardScreen> {
                               return Expanded(
                                 flex: 1,
                                 child: Text(
-                                  '${_formatTimeOfDay(checkpointTime)}',
+                                  _formatTimeOfDay(checkpointTime),
                                 ),
                               );
-                            }).toList(),
+                            }),
 
                             Expanded(
                               flex: 1,
                               child: Text(
                                 _showSeconds
-                                    ? '${totalSeconds} s'
+                                    ? '$totalSeconds s'
                                     : '${(totalSeconds / 60).toStringAsFixed(2)} min',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -356,7 +356,7 @@ class _ResultsBoardScreenState extends State<ResultsBoardScreen> {
                           ],
                         ),
                       );
-                    }).toList(),
+                    }),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
@@ -511,11 +511,11 @@ class _ResultsBoardScreenState extends State<ResultsBoardScreen> {
                                 ],
                               ),
                             );
-                          }).toList(),
+                          }),
                           const SizedBox(height: 16),
                         ],
                       );
-                    }).toList(),
+                    }),
                   ],
                 );
               },
