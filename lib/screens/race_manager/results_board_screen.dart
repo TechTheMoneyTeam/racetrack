@@ -42,7 +42,7 @@ class _ResultsBoardScreenState extends State<ResultsBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[150],
       body: Column(
         children: [
           Container(
@@ -295,7 +295,7 @@ class _ResultsBoardScreenState extends State<ResultsBoardScreen> {
                                   ? Colors.amber[100]
                                   : Colors.brown[100],
                           border: Border(
-                            bottom: BorderSide(color: Colors.grey[300]!),
+                            bottom: BorderSide(color: Colors.grey[200]!),
                           ),
                         ),
                         padding: const EdgeInsets.symmetric(
@@ -451,7 +451,7 @@ class _ResultsBoardScreenState extends State<ResultsBoardScreen> {
                                         ? Colors.amber[100]
                                         : Colors.brown[100],
                                 border: Border(
-                                  bottom: BorderSide(color: Colors.grey[300]!),
+                                  bottom: BorderSide(color: Colors.grey[200]!),
                                 ),
                               ),
                               padding: const EdgeInsets.symmetric(
