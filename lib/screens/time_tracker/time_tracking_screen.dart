@@ -34,10 +34,7 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
         context,
         listen: false,
       ).loadParticipants(widget.raceId);
-      Provider.of<TimeTrackingProvider>(
-        context,
-        listen: false,
-      )
+      Provider.of<TimeTrackingProvider>(context, listen: false)
         ..setSegment(widget.segment)
         ..loadSegmentTimes(widget.raceId);
     });
@@ -71,7 +68,7 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
       await timeTrackingProvider.trackTime(bibNumber, segments);
       _bibNumberController.clear();
       _bibNumberFocusNode.requestFocus();
-      
+
       if (timeTrackingProvider.error != null) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -94,10 +91,7 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: $e'),
-            backgroundColor: Colors.red,
-          ),
+          SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
         );
       }
     }
@@ -118,7 +112,13 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
         ),
       ),
       body: Consumer3<RaceProvider, ParticipantProvider, TimeTrackingProvider>(
-        builder: (context, raceProvider, participantProvider, timeTrackingProvider, child) {
+        builder: (
+          context,
+          raceProvider,
+          participantProvider,
+          timeTrackingProvider,
+          child,
+        ) {
           if (raceProvider.isLoading ||
               participantProvider.isLoading ||
               timeTrackingProvider.isLoading) {
@@ -164,13 +164,15 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       'Track ${widget.segment.toUpperCase()} Time',
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      style: Theme.of(
+                        context,
+                      ).textTheme.headlineSmall?.copyWith(
                         color: const Color(0xFF0C3B5B),
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.1,
@@ -178,44 +180,10 @@ class _TimeTrackingScreenState extends State<TimeTrackingScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _bibNumberController,
-                            focusNode: _bibNumberFocusNode,
-                            decoration: InputDecoration(
-                              labelText: 'BIB Number',
-                              labelStyle: const TextStyle(color: Color(0xFF0C3B5B)),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                borderSide: const BorderSide(color: Color(0xFF0C3B5B)),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Color(0xFF0C3B5B), width: 2),
-                              ),
-                              prefixIcon: const Icon(Icons.numbers, color: Color(0xFF0C3B5B)),
-                            ),
-                            keyboardType: TextInputType.number,
-                            onSubmitted: (_) => _trackTime(race.segments),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        ElevatedButton(
-                          onPressed: () => _trackTime(race.segments),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF0C3B5B),
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                            elevation: 2,
-                          ),
-                          child: const Text('TRACK TIME'),
-                        ),
-                      ],
+                    BibNumberInput(
+                      controller: _bibNumberController,
+                      focusNode: _bibNumberFocusNode,
+                      onSubmitted: (_) => _trackTime(race.segments),
                     ),
                   ],
                 ),
