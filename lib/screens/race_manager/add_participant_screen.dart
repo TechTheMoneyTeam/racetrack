@@ -207,7 +207,7 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
               Text(
                 'Adding to Race ID: ${currentRaceId ?? "Unknown"}',
                 style: TextStyle(
-                  color: currentRaceId != null ? Colors.blue[800] : Colors.red,
+                  color: currentRaceId != null ? Colors.blue[700] : Colors.red[500],
                   fontSize: 12,
                 ),
               ),
