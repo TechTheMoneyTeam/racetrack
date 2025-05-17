@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart'; 
+import 'firebase_options.dart';
 import 'repositories/firebase/firebase_participant_repository.dart';
 import 'repositories/firebase/firebase_race_repository.dart';
 import 'repositories/firebase/firebase_segment_time_repository.dart';
@@ -27,7 +27,7 @@ void main() async {
 
 class ErrorApp extends StatelessWidget {
   final String error;
-  
+
   const ErrorApp({super.key, required this.error});
 
   @override
@@ -39,9 +39,7 @@ class ErrorApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Race Tracking App'),
-        ),
+        appBar: AppBar(title: const Text('Race Tracking App')),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -68,7 +66,9 @@ class ErrorApp extends StatelessWidget {
                 const SizedBox(height: 8),
                 const Text('• Check your internet connection'),
                 const Text('• Verify Firebase configuration'),
-                const Text('• Restart the app completely (not just hot reload)'),
+                const Text(
+                  '• Restart the app completely (not just hot reload)',
+                ),
               ],
             ),
           ),
@@ -90,9 +90,13 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<FirebaseRaceRepository>.value(value: raceRepository),
-        Provider<FirebaseParticipantRepository>.value(value: participantRepository),
-        Provider<FirebaseSegmentTimeRepository>.value(value: segmentTimeRepository),
-  
+        Provider<FirebaseParticipantRepository>.value(
+          value: participantRepository,
+        ),
+        Provider<FirebaseSegmentTimeRepository>.value(
+          value: segmentTimeRepository,
+        ),
+
         ChangeNotifierProvider<RaceProvider>(
           create: (_) => RaceProvider(raceRepository),
         ),
@@ -129,7 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-  
   }
 
   void _onItemTapped(int index) {
@@ -142,54 +145,50 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          icon,
-          color: Colors.white,
-          size: 24,
-        ),
+        Icon(icon, color: Colors.white, size: 24),
         const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-          ),
-        ),
+        Text(label, style: const TextStyle(color: Colors.white, fontSize: 12)),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-   
     final raceProvider = Provider.of<RaceProvider>(context);
     final String? currentRaceId = raceProvider.currentRaceId;
-    
-   
+
     Widget currentScreen;
     switch (_selectedIndex) {
       case 0:
         currentScreen = RaceSetupScreen(
           onRaceCreated: (raceId) {
-      
             raceProvider.setCurrentRaceId(raceId);
           },
         );
         break;
       case 1:
-        currentScreen = currentRaceId == null
-            ? const NoRaceScreen(message: 'Please create a race first in the Dashboard tab.')
-            : RaceControlScreen(raceId: currentRaceId);
+        currentScreen =
+            currentRaceId == null
+                ? const NoRaceScreen(
+                  message: 'Please create a race first in the Dashboard tab.',
+                )
+                : RaceControlScreen(raceId: currentRaceId);
         break;
       case 2:
-        currentScreen = currentRaceId == null
-            ? const NoRaceScreen(message: 'Please create a race first in the Dashboard tab.')
-            : SegmentSelectionScreen(raceId: currentRaceId);
+        currentScreen =
+            currentRaceId == null
+                ? const NoRaceScreen(
+                  message: 'Please create a race first in the Dashboard tab.',
+                )
+                : SegmentSelectionScreen(raceId: currentRaceId);
         break;
       case 3:
-        currentScreen = currentRaceId == null
-            ? const NoRaceScreen(message: 'Please create a race first in the Dashboard tab.')
-            : ResultsBoardScreen(raceId: currentRaceId);
+        currentScreen =
+            currentRaceId == null
+                ? const NoRaceScreen(
+                  message: 'Please create a race first in the Dashboard tab.',
+                )
+                : ResultsBoardScreen(raceId: currentRaceId);
         break;
       default:
         currentScreen = const Center(child: Text('Unknown screen'));
@@ -201,11 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           color: const Color(0xFF0C3B5B),
           boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 10,
-              spreadRadius: 0,
-            ),
+            BoxShadow(color: Colors.black12, blurRadius: 10, spreadRadius: 0),
           ],
         ),
         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -214,19 +209,35 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             GestureDetector(
               onTap: () => _onItemTapped(0),
-              child: _buildNavItem(Icons.dashboard, 'Dashboard', _selectedIndex == 0),
+              child: _buildNavItem(
+                Icons.dashboard,
+                'Dashboard',
+                _selectedIndex == 0,
+              ),
             ),
             GestureDetector(
               onTap: () => _onItemTapped(1),
-              child: _buildNavItem(Icons.punch_clock, 'Timer', _selectedIndex == 1),
+              child: _buildNavItem(
+                Icons.punch_clock,
+                'Timer',
+                _selectedIndex == 1,
+              ),
             ),
             GestureDetector(
               onTap: () => _onItemTapped(2),
-              child: _buildNavItem(Icons.sports_bar, 'Segments', _selectedIndex == 2),
+              child: _buildNavItem(
+                Icons.sports_bar,
+                'Segments',
+                _selectedIndex == 2,
+              ),
             ),
             GestureDetector(
               onTap: () => _onItemTapped(3),
-              child: _buildNavItem(Icons.leaderboard, 'Results', _selectedIndex == 3),
+              child: _buildNavItem(
+                Icons.leaderboard,
+                'Results',
+                _selectedIndex == 3,
+              ),
             ),
           ],
         ),
@@ -235,12 +246,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-
 class NoRaceScreen extends StatelessWidget {
   final String message;
-  
+
   const NoRaceScreen({super.key, required this.message});
-  
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -259,8 +269,8 @@ class NoRaceScreen extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-           
-                (context.findAncestorStateOfType<_HomeScreenState>())?._onItemTapped(0);
+                (context.findAncestorStateOfType<_HomeScreenState>())
+                    ?._onItemTapped(0);
               },
               child: const Text('Go to Dashboard'),
             ),

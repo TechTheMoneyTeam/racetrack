@@ -16,6 +16,7 @@ class RaceControlScreen extends StatefulWidget {
 
 class _RaceControlScreenState extends State<RaceControlScreen> {
   @override
+
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
