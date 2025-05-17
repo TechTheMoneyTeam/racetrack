@@ -4,7 +4,6 @@ import '../../models/race.dart';
 import '../../providers/race_provider.dart';
 import '../../providers/time_tracking_provider.dart';
 
-
 class RaceControlScreen extends StatefulWidget {
   final String raceId;
 
@@ -16,13 +15,14 @@ class RaceControlScreen extends StatefulWidget {
 
 class _RaceControlScreenState extends State<RaceControlScreen> {
   @override
-
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<RaceProvider>(context, listen: false).loadRace(widget.raceId);
-      Provider.of<TimeTrackingProvider>(context, listen: false)
-          .loadSegmentTimes(widget.raceId);
+      Provider.of<TimeTrackingProvider>(
+        context,
+        listen: false,
+      ).loadSegmentTimes(widget.raceId);
     });
   }
 
@@ -58,23 +58,20 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
             return const Center(child: Text('Race not found'));
           }
 
-         return Padding(
-  padding: const EdgeInsets.only(top: 30),
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-     Row(
-  mainAxisSize: MainAxisSize.min,
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+            mainAxisAlignment: MainAxisAlignment.center,
   children: [
-    const Icon(Icons.flag), // You can change the icon as needed
-    const SizedBox(width: 8), // Space between icon and texts
+    const Icon(Icons.flag), 
+    const SizedBox(width: 8), 
     Text(
       'Race Status: ${_getStatusText(race.status)}',
       style: Theme.of(context).textTheme.headlineSmall,
     ),
   ],
 ),
-
       const SizedBox(height: 16),
       if (race.startTime != null) ...[
         Text(
@@ -90,8 +87,12 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
             final now = DateTime.now();
             final duration = now.difference(race.startTime!);
             final hours = duration.inHours.toString().padLeft(2, '0');
-            final minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
-            final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+                    final minutes = (duration.inMinutes % 60)
+                        .toString()
+                        .padLeft(2, '0');
+                    final seconds = (duration.inSeconds % 60)
+                        .toString()
+                        .padLeft(2, '0');
             return Text(
               'Elapsed Time: $hours:$minutes:$seconds',
               style: Theme.of(context).textTheme.titleLarge,
@@ -109,7 +110,10 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
               onPressed: () => raceProvider.startRace(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF0C3B5B),
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 16,
+                        ),
               ),
               child: const Text(
                 'START RACE',
@@ -121,7 +125,10 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
               onPressed: () => raceProvider.finishRace(),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 16,
+                        ),
               ),
               child: const Text(
                 'FINISH RACE',
@@ -130,10 +137,14 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
             ),
           if (race.status != RaceStatus.notStarted)
             ElevatedButton(
-              onPressed: () => _showResetConfirmation(context, raceProvider),
+                      onPressed:
+                          () => _showResetConfirmation(context, raceProvider),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                        backgroundColor: Colors.orange,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 16,
+                        ),
               ),
               child: const Text(
                 'RESET RACE',
@@ -143,9 +154,7 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
         ],
       ),
     ],
-  ),
 );
-
         },
       ),
     );
@@ -154,10 +163,11 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
   void _showResetConfirmation(BuildContext context, RaceProvider raceProvider) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder:
+          (context) => AlertDialog(
         title: const Text('Reset Race'),
         content: const Text(
-          'Are you sure you want to reset this race? This will clear all times and set the race status to "Not Started".',
+          'Are you sure you want to reset the race? This will clear all times and set the race status to "Not Started".',
         ),
         actions: [
           TextButton(
@@ -184,7 +194,6 @@ class _RaceControlScreenState extends State<RaceControlScreen> {
         return 'Started';
       case RaceStatus.finished:
         return 'Finished';
-    
     }
   }
 
