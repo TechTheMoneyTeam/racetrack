@@ -30,7 +30,7 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
     print("📱 AddParticipantScreen initialized with raceId: ${widget.raceId}");
 
     if (widget.raceId == null) {
-      print("⚠️ Warning: AddParticipantScreen initialized without raceId");
+      print("Warning!!!! AddParticipantScreen initialized without raceId");
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final participantProvider = Provider.of<ParticipantProvider>(
@@ -40,7 +40,7 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
         final currentRaceId = participantProvider.currentRaceId;
 
         if (currentRaceId == null) {
-          print("❌ No race ID available in provider either");
+          print("Warning!!!  No race ID available in provider either");
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text(
@@ -192,14 +192,17 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
     final currentRaceId = widget.raceId ?? participantProvider.currentRaceId;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Participant'),
+     appBar: AppBar(
+  title: const Text(
+    'Add Participant',
+    style: TextStyle(fontWeight: FontWeight.bold),
+  ),
+  leading: IconButton(
+    icon: const Icon(Icons.close),
+    onPressed: () => Navigator.of(context).pop(),
+  ),
+),
 
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -210,7 +213,7 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
                 'Adding to Race ID: ${currentRaceId ?? "Unknown"}',
                 style: TextStyle(
                   color: currentRaceId != null ? Colors.blue[800] : Colors.red,
-                  fontSize: 12,
+                  fontSize: 15,
                 ),
               ),
               const SizedBox(height: 16),              Form(
