@@ -50,7 +50,7 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
             ),
           );
         } else {
-          print("✅ Using raceId from provider: $currentRaceId");
+        
         }
       });
     }
@@ -106,7 +106,7 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
       final String? raceId = widget.raceId ?? participantProvider.currentRaceId;
 
       if (raceId == null || raceId.isEmpty) {
-        print("❌ No race ID available");
+       
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('No active race found. Please return and try again.'),
@@ -152,7 +152,6 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
           _bibNumberController.clear();
           _firstNameController.clear();
           _lastNameController.clear();
-
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(

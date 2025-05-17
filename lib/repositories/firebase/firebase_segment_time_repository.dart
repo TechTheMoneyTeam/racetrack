@@ -9,16 +9,15 @@ class FirebaseSegmentTimeRepository implements SegmentTimeRepository {
   @override
   Future<void> recordTime(SegmentTime segmentTime) async {
     final docId = '${segmentTime.raceId}_${segmentTime.bibNumber}_${segmentTime.segment}';
-    print('[FirebaseSegmentTimeRepository] Writing to Firestore: docId=$docId');
+  
     try {
       await _firestore
           .collection('segmentTimes')
           .doc(docId)
           .set(SegmentTimeDTO.toJson(segmentTime));
-      print('[FirebaseSegmentTimeRepository] Successfully wrote segmentTime for bibNumber=${segmentTime.bibNumber}');
+   
     } catch (e, stack) {
-      print('[FirebaseSegmentTimeRepository] Error recording segment time: $e');
-      print(stack);
+    
       rethrow;
     }
   }
@@ -32,15 +31,13 @@ class FirebaseSegmentTimeRepository implements SegmentTimeRepository {
         .orderBy('timeStamp', descending: false)
         .snapshots()
         .map((snapshot) {
-          print('[FirebaseSegmentTimeRepository] Got ${snapshot.docs.length} segment times');
+          
           return snapshot.docs
               .map((doc) {
                 try {
                   return SegmentTimeDTO.fromJson(doc.data());
                 } catch (e, stack) {
-                  print('[FirebaseSegmentTimeRepository] Error parsing segment time data: $e');
-                  print('Document data: ${doc.data()}');
-                  print(stack);
+              
                   rethrow;
                 }
               })
@@ -51,13 +48,12 @@ class FirebaseSegmentTimeRepository implements SegmentTimeRepository {
   @override
   Future<void> deleteSegmentTime(String bibNumber, String segment, String raceId) async {
     final docId = '${raceId}_${bibNumber}_$segment';
-    print('[FirebaseSegmentTimeRepository] Deleting segmentTime: docId=$docId');
+    
     try {
       await _firestore.collection('segmentTimes').doc(docId).delete();
-      print('[FirebaseSegmentTimeRepository] Successfully deleted segmentTime for bibNumber=$bibNumber, segment=$segment');
+    ;
     } catch (e, stack) {
-      print('[FirebaseSegmentTimeRepository] Error deleting segment time: $e');
-      print(stack);
+     
       rethrow;
     }
   }
@@ -72,15 +68,13 @@ class FirebaseSegmentTimeRepository implements SegmentTimeRepository {
         .orderBy('timeStamp', descending: false)
         .snapshots()
         .map((snapshot) {
-          print('[FirebaseSegmentTimeRepository] Got ${snapshot.docs.length} segment times for participant');
+       
           return snapshot.docs
               .map((doc) {
                 try {
                   return SegmentTimeDTO.fromJson(doc.data());
                 } catch (e, stack) {
-                  print('[FirebaseSegmentTimeRepository] Error parsing segment time data: $e');
-                  print('Document data: ${doc.data()}');
-                  print(stack);
+             
                   rethrow;
                 }
               })

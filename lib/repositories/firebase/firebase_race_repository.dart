@@ -9,7 +9,7 @@ class FirebaseRaceRepository implements RaceRepository {
   @override
   Future<String> createRace(Race race) async {
     try {
-      print('[FirebaseRaceRepository] Creating race');
+    
       final docRef = _firestore.collection('races').doc();
       final raceWithId = Race(
         id: docRef.id,
@@ -21,11 +21,10 @@ class FirebaseRaceRepository implements RaceRepository {
         raceType: race.raceType,
       );
       await docRef.set(RaceDTO.toJson(raceWithId));
-      print('[FirebaseRaceRepository] Successfully created race: ${docRef.id}');
+
       return docRef.id;
     } catch (e, stack) {
-      print('[FirebaseRaceRepository] Error creating race: $e');
-      print(stack);
+     
       rethrow;
     }
   }
@@ -43,12 +42,10 @@ class FirebaseRaceRepository implements RaceRepository {
           }
           try {
             final race = RaceDTO.fromJson(snapshot.data()!);
-            print('[FirebaseRaceRepository] Got race: $raceId');
+   
             return race;
           } catch (e, stack) {
-            print('[FirebaseRaceRepository] Error parsing race data: $e');
-            print('Document data: ${snapshot.data()}');
-            print(stack);
+       
             rethrow;
           }
         });
@@ -56,27 +53,25 @@ class FirebaseRaceRepository implements RaceRepository {
 
   Future<void> updateRace(Race race) async {
     try {
-      print('[FirebaseRaceRepository] Updating race: ${race.id}');
+
       await _firestore
           .collection('races')
           .doc(race.id)
           .update(RaceDTO.toJson(race));
-      print('[FirebaseRaceRepository] Successfully updated race: ${race.id}');
+    
     } catch (e, stack) {
-      print('[FirebaseRaceRepository] Error updating race: $e');
-      print(stack);
+   
       rethrow;
     }
   }
 
   Future<void> deleteRace(String raceId) async {
     try {
-      print('[FirebaseRaceRepository] Deleting race: $raceId');
+  
       await _firestore.collection('races').doc(raceId).delete();
-      print('[FirebaseRaceRepository] Successfully deleted race: $raceId');
+
     } catch (e, stack) {
-      print('[FirebaseRaceRepository] Error deleting race: $e');
-      print(stack);
+
       rethrow;
     }
   }
@@ -84,14 +79,13 @@ class FirebaseRaceRepository implements RaceRepository {
   @override
   Future<List<Race>> getAllRaces() async {
     try {
-      print('[FirebaseRaceRepository] Getting all races');
+
       final querySnapshot = await _firestore.collection('races').get();
       final races = querySnapshot.docs.map((doc) => RaceDTO.fromJson(doc.data())).toList();
-      print('[FirebaseRaceRepository] Got ${races.length} races');
+    
       return races;
     } catch (e, stack) {
-      print('[FirebaseRaceRepository] Error getting all races: $e');
-      print(stack);
+  
       rethrow;
     }
   }
@@ -99,15 +93,14 @@ class FirebaseRaceRepository implements RaceRepository {
   @override
   Future<void> startRace(String raceId) async {
     try {
-      print('[FirebaseRaceRepository] Starting race: $raceId');
+   
       await _firestore.collection('races').doc(raceId).update({
         'status': RaceStatus.started.index,
         'startTime': DateTime.now().millisecondsSinceEpoch,
       });
-      print('[FirebaseRaceRepository] Successfully started race: $raceId');
+     =
     } catch (e, stack) {
-      print('[FirebaseRaceRepository] Error starting race: $e');
-      print(stack);
+ 
       rethrow;
     }
   }
